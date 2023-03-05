@@ -1,6 +1,6 @@
 pipeline {
 	agent {
-	label 'sshkey'
+	label 'master'
       }
 	tools {
 	maven 'maven'
