@@ -1,10 +1,5 @@
 pipeline {
-	agent {
-	label 'sshkey'
-      }
-	tools {
-	maven 'maven'
-      }
+	agent any
 	stages {
 		stage ('build') {
 			steps {
