@@ -1,5 +1,10 @@
 pipeline {
-	agent any
+	agent {
+		label 'master'
+      }
+	tools {
+	maven 'maven'
+      }
 	stages {
 		stage ('build') {
 			steps {
