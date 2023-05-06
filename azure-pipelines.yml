@@ -3,16 +3,13 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-trigger:
-- master
-
 pool:
-  worker
+  my_pool
 
 steps:
 - task: SonarQubePrepare@5
   inputs:
-    SonarQube: 'Sid_sq'
+    SonarQube: 'Sonar_qube'
     scannerMode: 'Other'
     extraProperties: 
 - task: Maven@4
@@ -21,23 +18,26 @@ steps:
     options: '-DskipTests'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'latest'
-    
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
 - task: ArtifactoryGenericUpload@2
   inputs:
-    artifactoryService: 'Sid_Jf'
+    artifactoryService: 'jfrog'
     specSource: 'taskConfiguration'
     fileSpec: |
       {
         "files": [
           {
             "pattern": "*.jar",
-            "target": "sid123"
+            "target": "sid"
           }
         ]
       }
     failNoOp: true
-    
