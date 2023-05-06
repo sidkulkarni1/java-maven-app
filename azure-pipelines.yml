@@ -1,0 +1,40 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- master
+
+pool:
+  worker
+
+steps:
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'Sid_sq'
+    scannerMode: 'Other'
+    extraProperties: 
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
+    
+- task: ArtifactoryGenericUpload@2
+  inputs:
+    artifactoryService: 'Sid_Jf'
+    specSource: 'taskConfiguration'
+    fileSpec: |
+      {
+        "files": [
+          {
+            "pattern": "*.jar",
+            "target": "sid"
+          }
+        ]
+      }
+    failNoOp: true
+    
