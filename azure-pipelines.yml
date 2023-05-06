@@ -15,13 +15,16 @@ steps:
     SonarQube: 'Sid_sq'
     scannerMode: 'Other'
     extraProperties: 
-- task: Maven@3
+- task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
+    options: '-DskipTests'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
     
 - task: ArtifactoryGenericUpload@2
   inputs:
