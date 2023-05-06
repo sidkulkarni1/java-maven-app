@@ -35,7 +35,7 @@ steps:
         "files": [
           {
             "pattern": "*.jar",
-            "target": "sid"
+            "target": "sid123"
           }
         ]
       }
