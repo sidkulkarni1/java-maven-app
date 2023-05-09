@@ -19,19 +19,17 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'latest'
-- task: SonarQubePublish@5
-  inputs:
-    pollingTimeoutSec: '300'
+
 - task: ArtifactoryGenericUpload@2
   inputs:
-    artifactoryService: 'jfrog'
+    artifactoryService: 'Jfrog_vidya'
     specSource: 'taskConfiguration'
     fileSpec: |
       {
         "files": [
           {
             "pattern": "*.jar",
-            "target": "sid"
+            "target": "sid123"
           }
         ]
       }
