@@ -4,14 +4,9 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 pool:
-  my_pool
+  worker
 
 steps:
-- task: SonarQubePrepare@5
-  inputs:
-    SonarQube: 'Sonar_qube'
-    scannerMode: 'Other'
-    extraProperties: 
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
